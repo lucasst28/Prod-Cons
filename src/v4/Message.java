@@ -1,8 +1,8 @@
 package v4;
 
 public class Message {
-  private String content;  // Conteúdo da mensagem
-  private int producerId;  // ID do produtor que gerou a mensagem
+  private String content; 
+  private int producerId;  
 
   public Message(String content, int producerId) {
       this.content = content;

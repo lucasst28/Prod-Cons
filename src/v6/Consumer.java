@@ -16,12 +16,12 @@ public class Consumer extends Thread {
         try {
             System.out.println("Consumer " + consumerId + " started.");
             while (true) {
-                Message message = buffer.get(); // Consome uma mensagem por vez
+                Message message = buffer.get();
                 if (message == null) {
-                    break; // Sai se não há mais mensagens e produtores acabaram
+                    break; 
                 }
                 System.out.println("Consumer " + consumerId + " consumed: " + message.getContent());
-                Thread.sleep(consTime); // Simula tempo de processamento
+                Thread.sleep(consTime); 
             }
             System.out.println("Consumer " + consumerId + " finished.");
         } catch (InterruptedException e) {

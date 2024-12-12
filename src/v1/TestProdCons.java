@@ -10,7 +10,6 @@ public class TestProdCons {
                 TestProdCons.class.getClassLoader().getResourceAsStream("options.xml")
             );
 
-            //extract the properties
             int nProd = Integer.parseInt(properties.getProperty("nProd")); 
             int nCons = Integer.parseInt(properties.getProperty("nCons")); 
             int bufSz = Integer.parseInt(properties.getProperty("bufSz")); 

@@ -3,18 +3,20 @@ package v2;
 public class ProdConsBuffer implements IProdConsBuffer {
     private Message[] buffer;
     private int nfull = 0; 
-    private int tail = 0;
-    private int head = 0; 
+    private int nempty; 
+    private int tail = 0; //point to the next available slot
+    private int head = 0; //point to the next message to be consumed
     private int totalMessages = 0; 
     private int activeProducers; 
 
     public ProdConsBuffer(int bufSize) {
         buffer = new Message[bufSize];
+        nempty = bufSize; 
         activeProducers = 0; 
     }
 
     public synchronized void registerProducer() {
-        activeProducers++; //when a producer starts, increment the count
+        activeProducers++; 
     }
 
     public synchronized void producerFinished() {
@@ -34,6 +36,7 @@ public class ProdConsBuffer implements IProdConsBuffer {
         buffer[tail] = m; 
         tail = (tail + 1) % buffer.length; 
         nfull++;
+        nempty--;
         totalMessages++;
         notifyAll(); 
     }
@@ -49,6 +52,7 @@ public class ProdConsBuffer implements IProdConsBuffer {
         Message message = buffer[head]; 
         head = (head + 1) % buffer.length; 
         nfull--;
+        nempty++; 
         notifyAll();
         return message;
     }
@@ -61,5 +65,9 @@ public class ProdConsBuffer implements IProdConsBuffer {
     @Override
     public synchronized int totmsg() {
         return totalMessages;
+    }
+
+    public synchronized int nempty() {
+        return nempty;
     }
 }

@@ -41,7 +41,7 @@ public class TestProdCons {
                 consumer.join();
             }
 
-            System.out.println("All producers and consumers have finished. System shutting down.");
+            System.out.println("All producers and consumers have finished. Application finished.");
 
         } catch (Exception e) {
             e.printStackTrace();
