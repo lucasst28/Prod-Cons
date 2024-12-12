@@ -19,34 +19,28 @@ public class TestProdCons {
             int minProd = Integer.parseInt(properties.getProperty("minProd")); 
             int maxProd = Integer.parseInt(properties.getProperty("maxProd")); 
 
-            // Create buffer
             IProdConsBuffer buffer = new ProdConsBuffer(bufSz);
 
-            // Start producers
             Thread[] producers = new Thread[nProd];
             for (int i = 0; i < nProd; i++) {
                 producers[i] = new Producer(buffer, minProd, maxProd, prodTime);
                 producers[i].start();
             }
-
-            // Start consumers
+            
             Thread[] consumers = new Thread[nCons];
             for (int i = 0; i < nCons; i++) {
                 consumers[i] = new Consumer(buffer, consTime);
                 consumers[i].start();
             }
 
-            // Wait for all producers to finish
             for (Thread producer : producers) {
                 producer.join();
             }
 
-            // Wait for all consumers to finish
             for (Thread consumer : consumers) {
                 consumer.join();
             }
 
-            // Print final message
             System.out.println("All producers and consumers have finished. System shutting down.");
 
         } catch (Exception e) {
